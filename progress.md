@@ -1,0 +1,50 @@
+# 项目进度日志
+
+## 2026-05-04
+
+- 收到用户 PRD，并确认用户希望全程协助从 0 开始完成项目。
+- 加载中文文件规划流程。
+- 检查项目目录，发现当前是空 Git 项目。
+- 创建 `task_plan.md`、`findings.md`、`progress.md` 三个持久化规划文件。
+- 创建 FastAPI 项目骨架、配置模板、Telegram 解析、LLM 客户端、Notion 客户端、语音转写接口和主服务流程。
+- 创建 README，记录本地运行、Notion 字段、Webhook 设置和隐私白名单。
+- 创建基础测试，覆盖 URL 识别、LLM JSON 提取、标签清洗、Telegram 文本/链接/语音消息解析。
+- 运行 `python -m pytest`，结果：7 passed。
+- 运行 `python -m compileall app scripts`，结果：通过。
+- 运行应用导入检查，结果：成功导入 FastAPI app。
+- 启动本地 FastAPI 服务，健康检查 `http://127.0.0.1:8000/health` 返回 `ok`。
+- 清理测试缓存和编译缓存；服务日志因本地服务仍在运行被占用，已通过 `.gitignore` 忽略。
+- 新增 `scripts/check_integrations.py`，用于逐项验证 LLM、Notion、Telegram 配置。
+- 首次运行体检脚本发现脚本路径无法导入 `app`，已修复。
+- 创建本地 `.env` 文件，供用户填写真实密钥；该文件已被 `.gitignore` 忽略。
+- 新增 `docs/setup-checklist.md`，列出后续真实联调需要填写的配置和验证命令。
+- 写入用户提供的 Telegram Token、Notion Database ID、LLM Key 和 Telegram 白名单 ID 到本地 `.env`。
+- 运行体检脚本：LLM 正常，Telegram 正常，Notion 因缺少 Integration Token 暂未通过。
+- 新增 `scripts/show_telegram_updates.py`，用于辅助确认 Telegram user id。
+- 收到 Notion Integration Token 后写入 `.env`。
+- 发现用户提供的是 Notion 页面链接，真实内嵌数据库 ID 为 `356dfe08d9eb80519c07fea5a5d07ee7`，已更新 `.env`。
+- 通过 Notion 工具将数据库字段补齐为 `Name`、`Tags`、`Summary`、`Original Content`、`Type`、`Status`、`Source URL`。
+- 体检脚本访问 Notion 成功，但遇到空数据库标题导致脚本自身 `IndexError`，已修复标题兜底。
+- 新增 `scripts/smoke_test_write.py`，用于真实调用 LLM 并写入一条 Notion 测试记录。
+- 运行 `scripts/check_integrations.py`，结果：LLM、Notion、Telegram 全部 OK。
+- 运行 `scripts/smoke_test_write.py`，结果：成功写入 Notion 测试页 `https://www.notion.so/356dfe08d9eb81bca58ad5e0a8713cb9`。
+- 再次运行 `python -m pytest`，结果：7 passed。
+- 再次运行 `python -m compileall app scripts`，结果：通过。
+- 读取写入的 Notion 测试记录，确认字段已完整入库。
+- 调整 Telegram 回复逻辑：即使 Bot 回复失败，也不会影响 Webhook 写入成功。
+- 重启本地 FastAPI 服务并加载真实 `.env` 配置。
+- 本地 Webhook 模拟请求返回 `ok`，并写入 Notion 记录 `Webhook连接Telegram与Notion`。
+- 启动 localhost.run 临时 HTTPS 隧道，首次使用 `localhost` 转发失败，改为 `127.0.0.1:8000` 后公网 `/health` 验证通过。
+- 设置 Telegram Webhook 到临时隧道地址，Telegram 返回 `Webhook was set`。
+- 公网 Webhook 模拟请求返回 `ok`，Notion 出现新记录 `Webhook与AI集成指南`。
+- 查询 Telegram Webhook 状态，当前 URL 为临时隧道地址，待处理更新数为 0，无错误信息。
+- 用户要求部署到稳定平台。
+- 查询官方文档后，优先选择 Railway，Render 作为备选。
+- 检查本机工具：已安装 Git，未安装 Railway CLI 和 GitHub CLI。
+- 新增 `requirements.txt`、`railway.json`、`render.yaml`、`Procfile` 和 `docs/deploy-railway.md`，项目已具备稳定平台部署配置。
+- 部署准备后再次验证：`python -m pytest` 结果 7 passed，`python -m compileall app scripts` 通过，`scripts/check_integrations.py` 显示 LLM、Notion、Telegram 全部 OK。
+- 检查 `.gitignore`，确认 `.env` 和日志文件会被忽略，不会把真实密钥纳入版本控制。
+- 用户希望不花钱部署，改用 GitHub + Render Free 方案。
+- 将 `render.yaml` 从 `starter` 改为 `free`。
+- 新增 GitHub Actions CI：每次推送和 PR 自动安装依赖并运行测试。
+- 新增 `docs/deploy-render-free.md`，记录免费部署步骤、限制和 Webhook 设置方式。
