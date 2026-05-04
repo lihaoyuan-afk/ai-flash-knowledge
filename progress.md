@@ -48,3 +48,6 @@
 - 将 `render.yaml` 从 `starter` 改为 `free`。
 - 新增 GitHub Actions CI：每次推送和 PR 自动安装依赖并运行测试。
 - 新增 `docs/deploy-render-free.md`，记录免费部署步骤、限制和 Webhook 设置方式。
+- 执行密钥扫描，除被忽略的 `.env` 外，仓库文件中未发现真实 Token。
+- 本地 Git 提交完成：`Initial Telegram to Notion bot`。
+- 默认分支已改为 `main`，准备推送到 GitHub。
