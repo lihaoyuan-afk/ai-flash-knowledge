@@ -59,3 +59,9 @@
 - 首次 Cloud Run 部署成功，服务地址为 `https://ai-flash-knowledge-dlno2syv4q-uc.a.run.app`。
 - Cloud Run `/health` 验证通过，Telegram Webhook 已指向 Cloud Run。
 - 云端 Webhook 模拟请求返回 `ok`，但 Notion 未查到对应原文；判断为服务内部异常被兜底吞掉，开始补充云端异常日志。
+- 发现 Cloud Run 日志无 Python 应用输出，根因：`main.py` 未调用 `logging.basicConfig()`，所有 `logger.exception()` 输出被丢弃。
+- 在 `main.py` 加入 `logging.basicConfig(stream=sys.stdout, level=logging.INFO)`，修复日志输出。
+- 重新部署后确认密钥环境变量已正确设置（每次 `--source .` 部署后需重新 `update-env-vars`）。
+- 云端端到端再次验证：DeepSeek LLM 200 OK、Notion 200 OK、Telegram sendMessage 200 OK，Notion 写入确认成功。
+- 提交并推送所有待提交文件（Dockerfile、.dockerignore、deploy-google-cloud-run.md、main.py 日志修复）到 GitHub。
+- 项目已完整上线，全链路稳定运行。
