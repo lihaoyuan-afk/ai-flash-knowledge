@@ -27,6 +27,7 @@
 - Telegram 用户白名单通过 `TELEGRAM_ALLOWED_USER_IDS` 配置。
 - 稳定部署优先选择 Railway，原因是官方支持 FastAPI、自动 HTTPS 域名、环境变量和健康检查；Render 作为备选。
 - 用户选择不花钱后，部署策略调整为 GitHub + Render Free。接受休眠和冷启动，换取 $0 成本。
+- Google Cloud Run 是可行替代方案：支持从源码部署、Dockerfile、自动 HTTPS 和按请求计费；低频个人 Bot 适合尝试免费额度，但通常需要绑定结算账号并设置预算提醒。
 
 ## 遇到的问题
 

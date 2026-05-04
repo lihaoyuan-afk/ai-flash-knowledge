@@ -1,6 +1,15 @@
+import logging
+import sys
+
 from fastapi import Depends, FastAPI, Request
 
 from app.config import Settings, get_settings
+
+logging.basicConfig(
+    stream=sys.stdout,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
 from app.llm import LLMClient
 from app.notion import NotionClient
 from app.service import KnowledgeService

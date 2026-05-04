@@ -1,9 +1,13 @@
+import logging
+
 from app.llm import LLMClient
 from app.models import AIExtraction
 from app.models import IncomingContent, KnowledgeItem, SourceType
 from app.notion import NotionClient
 from app.telegram import TelegramClient
 from app.transcription import TranscriptionClient
+
+logger = logging.getLogger(__name__)
 
 
 class KnowledgeService:
@@ -30,6 +34,7 @@ class KnowledgeService:
             item = await self._build_item(content)
             page_url = await self.notion.create_page(item)
         except Exception as exc:
+            logger.exception("Failed to handle incoming content")
             await self._safe_send(content.chat_id, f"⚠️ 记录失败：{exc}")
             return None
 
@@ -41,6 +46,7 @@ class KnowledgeService:
         try:
             await self.telegram.send_message(chat_id, text)
         except Exception:
+            logger.exception("Failed to send Telegram message")
             return
 
     async def _build_item(self, content: IncomingContent) -> KnowledgeItem:

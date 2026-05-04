@@ -1,0 +1,15 @@
+.git
+.github
+.env
+.venv
+__pycache__
+.pytest_cache
+*.pyc
+*.log
+docs
+tests
+downloads
+uvicorn.err.log
+uvicorn.out.log
+tunnel.err.log
+tunnel.out.log

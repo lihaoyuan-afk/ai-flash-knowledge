@@ -147,4 +147,6 @@ python scripts/show_telegram_updates.py
 
 免费部署说明见：[docs/deploy-render-free.md](docs/deploy-render-free.md)
 
+Google Cloud Run 部署说明见：[docs/deploy-google-cloud-run.md](docs/deploy-google-cloud-run.md)
+
 Railway 付费稳定部署说明见：[docs/deploy-railway.md](docs/deploy-railway.md)

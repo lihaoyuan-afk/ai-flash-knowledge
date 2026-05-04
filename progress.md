@@ -53,3 +53,9 @@
 - 默认分支已改为 `main`，准备推送到 GitHub。
 - 用户提供 GitHub 远程仓库 `https://github.com/lihaoyuan-afk/ai-flash-knowledge.git`。
 - 推送 `main` 分支到 GitHub 成功，远程最新提交为 `9d8e33d`。
+- 用户反馈 Render/GitHub 部署失败，询问是否可以使用 Google Cloud。
+- 确认本机已安装 Google Cloud CLI。
+- 新增 `Dockerfile`、`.dockerignore` 和 `docs/deploy-google-cloud-run.md`，项目已支持 Cloud Run 部署。
+- 首次 Cloud Run 部署成功，服务地址为 `https://ai-flash-knowledge-dlno2syv4q-uc.a.run.app`。
+- Cloud Run `/health` 验证通过，Telegram Webhook 已指向 Cloud Run。
+- 云端 Webhook 模拟请求返回 `ok`，但 Notion 未查到对应原文；判断为服务内部异常被兜底吞掉，开始补充云端异常日志。
