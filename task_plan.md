@@ -46,7 +46,7 @@
 | 6. 本地与部署说明 | complete | 让用户能配置、运行、部署 | README 与环境变量说明 |
 | 7. 验证 | complete | 基础测试与导入检查 | 测试命令和结果记录 |
 | 8. 稳定部署准备 | complete | 准备 Railway/Render 部署文件 | 部署配置、依赖文件、部署说明 |
-| 9. GitHub 推送 | pending | 推送代码到 GitHub 仓库 | 需要用户提供远程仓库 URL 或 GitHub 授权 |
+| 9. GitHub 推送 | complete | 推送代码到 GitHub 仓库 | GitHub 仓库已连接并推送 |
 | 10. Render Free 上线 | pending | 从 GitHub 自动部署到 Render Free 并替换 Telegram Webhook | 需要用户连接 Render 与 GitHub |
 
 ## MVP 范围
