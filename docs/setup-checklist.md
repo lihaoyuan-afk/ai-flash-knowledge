@@ -27,12 +27,14 @@ LLM_MODEL=deepseek-chat
 | Type | Select |
 | Status | Select |
 | Source URL | URL |
+| Answer | Text |
 
 `Type` 建议先建这些选项：
 
 - Text
 - Audio
 - Link
+- Image Question
 
 `Status` 建议先建这些选项：
 

@@ -4,25 +4,31 @@ import sys
 from fastapi import Depends, FastAPI, Request
 
 from app.config import Settings, get_settings
-
-logging.basicConfig(
-    stream=sys.stdout,
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(name)s %(message)s",
-)
+from app.image_answer import ImageAnswerClient
 from app.llm import LLMClient
 from app.notion import NotionClient
 from app.service import KnowledgeService
 from app.telegram import TelegramClient, parse_update
 from app.transcription import TranscriptionClient
 
-app = FastAPI(title="AI 闪念知识库", version="0.1.0")
+logging.basicConfig(
+    stream=sys.stdout,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
+
+app = FastAPI(title="AI Flash Knowledge Base", version="0.2.0")
 
 
 def get_service(settings: Settings = Depends(get_settings)) -> KnowledgeService:
     return KnowledgeService(
         telegram=TelegramClient(settings.telegram_bot_token),
         llm=LLMClient(settings.llm_api_key, settings.llm_base_url, settings.llm_model),
+        image_answer=ImageAnswerClient(
+            settings.vertex_ai_project,
+            settings.vertex_ai_location,
+            settings.vertex_ai_model,
+        ),
         notion=NotionClient(settings.notion_token, settings.notion_database_id, settings.notion_version),
         transcription=TranscriptionClient(
             settings.transcription_api_key,

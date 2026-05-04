@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     transcription_base_url: str | None = None
     transcription_model: str | None = None
 
+    vertex_ai_project: str | None = None
+    vertex_ai_location: str = "us-central1"
+    vertex_ai_model: str = "gemini-2.5-flash"
+
     notion_version: str = Field(default="2022-06-28")
 
     @property

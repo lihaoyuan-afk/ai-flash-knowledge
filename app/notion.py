@@ -28,6 +28,11 @@ class NotionClient:
             },
         }
 
+        if item.answer:
+            payload["properties"]["Answer"] = {
+                "rich_text": [{"text": {"content": part}} for part in chunk_text(item.answer)]
+            }
+
         if item.source_url:
             payload["properties"]["Source URL"] = {"url": item.source_url}
 

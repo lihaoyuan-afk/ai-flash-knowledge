@@ -59,6 +59,14 @@
 - 首次 Cloud Run 部署成功，服务地址为 `https://ai-flash-knowledge-dlno2syv4q-uc.a.run.app`。
 - Cloud Run `/health` 验证通过，Telegram Webhook 已指向 Cloud Run。
 - 云端 Webhook 模拟请求返回 `ok`，但 Notion 未查到对应原文；判断为服务内部异常被兜底吞掉，开始补充云端异常日志。
+- 用户要求新增“发送图片问题，保存 AI 回答到知识库”的功能，并指定使用 Vertex AI Gemini API。
+- 查阅 Google 官方文档后，采用 Google Gen AI SDK + Vertex AI，模型默认为 `gemini-2.5-flash`。
+- 新增 `Image Question` 输入类型、Telegram 图片解析、图片下载、`ImageAnswerClient`、Notion `Answer` 写入。
+- Notion 数据库已新增 `Answer` 字段，`Type` 已新增 `Image Question` 选项。
+- 启用 `aiplatform.googleapis.com` 和 `cloudresourcemanager.googleapis.com`，并授予 Cloud Run 运行服务账号 `roles/aiplatform.user`。
+- 本地 Vertex AI Gemini 文本调用验证通过。
+- Cloud Run 已重新部署到 revision `ai-flash-knowledge-00008-bsx`，健康检查通过。
+- 本地生成测试题图片，调用 Vertex AI Gemini 成功回答，并写入 Notion 测试页 `https://www.notion.so/Image-QA-test-356dfe08d9eb81809aa3ddc157af2d54`。
 - 发现 Cloud Run 日志无 Python 应用输出，根因：`main.py` 未调用 `logging.basicConfig()`，所有 `logger.exception()` 输出被丢弃。
 - 在 `main.py` 加入 `logging.basicConfig(stream=sys.stdout, level=logging.INFO)`，修复日志输出。
 - 重新部署后确认密钥环境变量已正确设置（每次 `--source .` 部署后需重新 `update-env-vars`）。

@@ -49,3 +49,24 @@ def test_parse_voice_update() -> None:
     assert content is not None
     assert content.source_type == SourceType.audio
     assert content.voice_file_id == "abc"
+
+
+def test_parse_photo_update_uses_largest_photo() -> None:
+    content = parse_update(
+        {
+            "message": {
+                "chat": {"id": 100},
+                "from": {"id": 200},
+                "caption": "please answer this",
+                "photo": [
+                    {"file_id": "small", "file_size": 10},
+                    {"file_id": "large", "file_size": 100},
+                ],
+            }
+        }
+    )
+
+    assert content is not None
+    assert content.source_type == SourceType.image_question
+    assert content.photo_file_id == "large"
+    assert content.text == "please answer this"

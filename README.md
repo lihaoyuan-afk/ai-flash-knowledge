@@ -7,6 +7,7 @@
 - 接收 Telegram Webhook。
 - 处理文本消息。
 - 识别文本里的 URL，并按 Link 类型保存。
+- 处理图片问题：用 Vertex AI Gemini 读取图片并生成答案，保存到 Notion 的 `Answer` 字段。
 - 调用 LLM 生成标题、摘要、标签。
 - 写入 Notion 数据库。
 - AI 未配置或 AI 失败时，仍会保存原文并标记为待整理。
@@ -45,6 +46,7 @@ NOTION_TOKEN=
 | Type | Select，选项：Text、Audio、Link |
 | Status | Select，选项：Success、AI Failed、Empty |
 | Source URL | URL |
+| Answer | Text |
 
 `Created Time` 可以用 Notion 自带的 Created time 字段。
 
@@ -150,3 +152,13 @@ python scripts/show_telegram_updates.py
 Google Cloud Run 部署说明见：[docs/deploy-google-cloud-run.md](docs/deploy-google-cloud-run.md)
 
 Railway 付费稳定部署说明见：[docs/deploy-railway.md](docs/deploy-railway.md)
+
+## 使用图片问答
+
+在 Telegram 里直接发送一张包含题目或问题的图片，可以附带一句 caption。Bot 会：
+
+- 读取图片里的问题
+- 生成完整答案
+- 把题目/问题保存到 `Original Content`
+- 把完整回答保存到 `Answer`
+- 将 `Type` 标记为 `Image Question`

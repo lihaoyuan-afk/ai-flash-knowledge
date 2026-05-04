@@ -50,6 +50,17 @@ NOTION_DATABASE_ID=356dfe08d9eb80519c07fea5a5d07ee7
 LLM_API_KEY=你的 LLM API Key
 LLM_BASE_URL=https://api.deepseek.com
 LLM_MODEL=deepseek-chat
+VERTEX_AI_PROJECT=project-e31ce97f-79c3-4153-abb
+VERTEX_AI_LOCATION=us-central1
+VERTEX_AI_MODEL=gemini-2.5-flash
+```
+
+Cloud Run 运行服务账号需要有 Vertex AI User 权限：
+
+```powershell
+gcloud projects add-iam-policy-binding project-e31ce97f-79c3-4153-abb `
+  --member="serviceAccount:189424783668-compute@developer.gserviceaccount.com" `
+  --role="roles/aiplatform.user"
 ```
 
 语音识别暂时不设置。

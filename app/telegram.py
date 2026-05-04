@@ -25,6 +25,14 @@ class TelegramClient:
         file_path = response.json()["result"]["file_path"]
         return f"https://api.telegram.org/file/bot{self.bot_token}/{file_path}"
 
+    async def download_file(self, file_id: str) -> tuple[bytes, str, str]:
+        file_url = await self.get_file_url(file_id)
+        async with httpx.AsyncClient(timeout=30) as client:
+            response = await client.get(file_url)
+            response.raise_for_status()
+        content_type = response.headers.get("content-type") or "image/jpeg"
+        return response.content, content_type, file_url
+
 
 def parse_update(update: dict) -> IncomingContent | None:
     message = update.get("message") or update.get("edited_message")
@@ -37,6 +45,28 @@ def parse_update(update: dict) -> IncomingContent | None:
     if chat_id is None:
         return None
 
+    voice = message.get("voice")
+    if voice and voice.get("file_id"):
+        return IncomingContent(
+            chat_id=chat_id,
+            user_id=user.get("id"),
+            message_id=message.get("message_id"),
+            voice_file_id=voice["file_id"],
+            source_type=SourceType.audio,
+        )
+
+    photos = message.get("photo") or []
+    if photos:
+        largest_photo = max(photos, key=lambda item: item.get("file_size", 0))
+        return IncomingContent(
+            chat_id=chat_id,
+            user_id=user.get("id"),
+            message_id=message.get("message_id"),
+            text=message.get("caption"),
+            photo_file_id=largest_photo.get("file_id"),
+            source_type=SourceType.image_question,
+        )
+
     text = message.get("text") or message.get("caption")
     if text:
         url = first_url(text)
@@ -47,16 +77,6 @@ def parse_update(update: dict) -> IncomingContent | None:
             text=text,
             source_url=url,
             source_type=SourceType.link if url else SourceType.text,
-        )
-
-    voice = message.get("voice")
-    if voice and voice.get("file_id"):
-        return IncomingContent(
-            chat_id=chat_id,
-            user_id=user.get("id"),
-            message_id=message.get("message_id"),
-            voice_file_id=voice["file_id"],
-            source_type=SourceType.audio,
         )
 
     return None
