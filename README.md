@@ -162,3 +162,18 @@ Railway 付费稳定部署说明见：[docs/deploy-railway.md](docs/deploy-railw
 - 把题目/问题保存到 `Original Content`
 - 把完整回答保存到 `Answer`
 - 将 `Type` 标记为 `Image Question`
+
+图片问答 provider 可以切换：
+
+```env
+IMAGE_ANSWER_PROVIDER=vertex
+```
+
+或者使用小米 OpenAI-compatible 视觉接口：
+
+```env
+IMAGE_ANSWER_PROVIDER=xiaomi
+XIAOMI_API_KEY=
+XIAOMI_BASE_URL=
+XIAOMI_MODEL=
+```

@@ -67,6 +67,13 @@
 - 本地 Vertex AI Gemini 文本调用验证通过。
 - Cloud Run 已重新部署到 revision `ai-flash-knowledge-00008-bsx`，健康检查通过。
 - 本地生成测试题图片，调用 Vertex AI Gemini 成功回答，并写入 Notion 测试页 `https://www.notion.so/Image-QA-test-356dfe08d9eb81809aa3ddc157af2d54`。
+- 用户反馈图片问答报错 `VERTEX_AI_PROJECT is not configured`，并希望改用小米 API。
+- 图片问答模块已改为可切换 provider：`vertex` 或 `xiaomi`。
+- 新增小米 OpenAI-compatible 视觉接口配置：`IMAGE_ANSWER_PROVIDER=xiaomi`、`XIAOMI_API_KEY`、`XIAOMI_BASE_URL`、`XIAOMI_MODEL`。
+- 用户提供小米 API 配置后，已写入本地 `.env`。
+- 本地生成测试题图片并调用小米视觉接口成功，答案已写入 Notion 测试页 `https://www.notion.so/Xiaomi-Image-QA-test-357dfe08d9eb81cea3d8cd70caa2f3eb`。
+- Cloud Run 已部署到 revision `ai-flash-knowledge-00010-9qk`，环境变量已切换为 `IMAGE_ANSWER_PROVIDER=xiaomi`。
+- Cloud Run `/health` 正常，Telegram Webhook 仍指向 Cloud Run 且无积压、无错误。
 - 发现 Cloud Run 日志无 Python 应用输出，根因：`main.py` 未调用 `logging.basicConfig()`，所有 `logger.exception()` 输出被丢弃。
 - 在 `main.py` 加入 `logging.basicConfig(stream=sys.stdout, level=logging.INFO)`，修复日志输出。
 - 重新部署后确认密钥环境变量已正确设置（每次 `--source .` 部署后需重新 `update-env-vars`）。

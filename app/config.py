@@ -28,6 +28,11 @@ class Settings(BaseSettings):
     vertex_ai_location: str = "us-central1"
     vertex_ai_model: str = "gemini-2.5-flash"
 
+    image_answer_provider: str = "vertex"
+    xiaomi_api_key: str | None = None
+    xiaomi_base_url: str | None = None
+    xiaomi_model: str | None = None
+
     notion_version: str = Field(default="2022-06-28")
 
     @property

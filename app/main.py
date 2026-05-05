@@ -25,9 +25,13 @@ def get_service(settings: Settings = Depends(get_settings)) -> KnowledgeService:
         telegram=TelegramClient(settings.telegram_bot_token),
         llm=LLMClient(settings.llm_api_key, settings.llm_base_url, settings.llm_model),
         image_answer=ImageAnswerClient(
+            settings.image_answer_provider,
             settings.vertex_ai_project,
             settings.vertex_ai_location,
             settings.vertex_ai_model,
+            settings.xiaomi_api_key,
+            settings.xiaomi_base_url,
+            settings.xiaomi_model,
         ),
         notion=NotionClient(settings.notion_token, settings.notion_database_id, settings.notion_version),
         transcription=TranscriptionClient(

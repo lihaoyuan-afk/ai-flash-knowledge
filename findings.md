@@ -29,6 +29,7 @@
 - 用户选择不花钱后，部署策略调整为 GitHub + Render Free。接受休眠和冷启动，换取 $0 成本。
 - Google Cloud Run 是可行替代方案：支持从源码部署、Dockerfile、自动 HTTPS 和按请求计费；低频个人 Bot 适合尝试免费额度，但通常需要绑定结算账号并设置预算提醒。
 - Vertex AI Gemini 图片问答可用：Google Gen AI SDK 支持通过 Vertex AI 调用 Gemini，并可用图片 bytes 作为输入；Cloud Run 服务账号需要 `roles/aiplatform.user`。
+- 小米图片问答可按 OpenAI-compatible `/chat/completions` 方式适配：图片以 base64 data URL 放进 `image_url`，文本 prompt 和图片一起发送。
 
 ## 遇到的问题
 

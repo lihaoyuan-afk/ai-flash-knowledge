@@ -77,3 +77,20 @@ $env:TELEGRAM_BOT_TOKEN="你的 Bot Token"
 $env:TELEGRAM_WEBHOOK_URL="https://你的公网域名/telegram/webhook"
 python scripts/set_telegram_webhook.py
 ```
+
+## 6. 图片问答 Provider
+
+默认使用 Vertex AI：
+
+```env
+IMAGE_ANSWER_PROVIDER=vertex
+```
+
+如需切换小米 OpenAI-compatible 视觉接口：
+
+```env
+IMAGE_ANSWER_PROVIDER=xiaomi
+XIAOMI_API_KEY=
+XIAOMI_BASE_URL=
+XIAOMI_MODEL=
+```

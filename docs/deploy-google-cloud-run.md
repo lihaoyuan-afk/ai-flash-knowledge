@@ -53,6 +53,7 @@ LLM_MODEL=deepseek-chat
 VERTEX_AI_PROJECT=project-e31ce97f-79c3-4153-abb
 VERTEX_AI_LOCATION=us-central1
 VERTEX_AI_MODEL=gemini-2.5-flash
+IMAGE_ANSWER_PROVIDER=vertex
 ```
 
 Cloud Run 运行服务账号需要有 Vertex AI User 权限：
@@ -83,6 +84,7 @@ gcloud run deploy ai-flash-knowledge \
 - `TELEGRAM_BOT_TOKEN`
 - `NOTION_TOKEN`
 - `LLM_API_KEY`
+- 如果切换小米图片问答，还需要 `XIAOMI_API_KEY`、`XIAOMI_BASE_URL`、`XIAOMI_MODEL`，并把 `IMAGE_ANSWER_PROVIDER` 设为 `xiaomi`
 
 ## 部署后验证
 
